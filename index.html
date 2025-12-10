@@ -50,26 +50,21 @@
 
         .brand-wrap {
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            align-items: center;
         }
 
-        .brand-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 0;
+        .brand-logo {
+            height: 50px;
+            width: auto;
+            max-width: 250px;
+            object-fit: contain;
         }
 
-        .brand-sub {
-            font-size: 14px;
-            color: #dce6f9;
-            margin-top: 0;
-        }
-
-        .brand-title-mobile {
-            display: none;
-            font-size: 24px;
-            font-weight: bold;
+        @media (max-width: 768px) {
+            .brand-logo {
+                height: 40px;
+                max-width: 200px;
+            }
         }
 
         /* Main Content */
@@ -607,9 +602,9 @@
     <!-- Header -->
     <header class="site-header">
         <div class="brand-wrap">
-            <div class="brand-title">SEFAZ-PB</div>
-            <div class="brand-title-mobile">SEFAZ-PB</div>
-            <div class="brand-sub">Secretaria de Estado da Fazenda da Paraíba</div>
+            <img src="https://cartaservico.sefaz.pb.gov.br/img/header/LogoSefazB.svg" 
+                 alt="SEFAZ-PB - Secretaria de Estado da Fazenda da Paraíba" 
+                 class="brand-logo">
         </div>
     </header>
 
@@ -1067,8 +1062,14 @@
 
     <!-- Footer -->
     <footer style="background-color: var(--primary-dark); color: white; text-align: center; padding: 20px; margin-top: 50px;">
-        <p>&copy; 2024 Secretaria de Estado da Fazenda da Paraíba - SEFAZ-PB</p>
-        <p style="font-size: 0.9rem; opacity: 0.9;">Governo do Estado da Paraíba</p>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+            <img src="https://cartaservico.sefaz.pb.gov.br/img/header/LogoParaibaB.svg" 
+                 alt="Governo do Estado da Paraíba" 
+                 style="height: 60px; width: auto; max-width: 250px; object-fit: contain;">
+            <div>
+                <p style="margin: 0;">&copy; 2024 Secretaria de Estado da Fazenda da Paraíba - SEFAZ-PB</p>
+            </div>
+        </div>
     </footer>
 
     <!-- Bootstrap JS -->
