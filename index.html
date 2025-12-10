@@ -596,6 +596,130 @@
             background: linear-gradient(to right, transparent, var(--primary), transparent);
             margin: 40px 0;
         }
+
+        /* QR Code Section */
+        .qrcode-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 3px solid var(--primary);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .qrcode-section h2 {
+            color: var(--primary-dark);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .qrcode-section p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .qrcode-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .qrcode-image {
+            width: 250px;
+            height: 250px;
+            border: 5px solid white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: white;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .qrcode-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .qrcode-placeholder {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: #666;
+        }
+
+        .qrcode-image:has(img[src=""]) .qrcode-placeholder,
+        .qrcode-image img[src=""] + .qrcode-placeholder {
+            display: flex;
+        }
+
+        .qrcode-instructions {
+            background: white;
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .qrcode-instructions h3 {
+            color: var(--primary-dark);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .qrcode-instructions ol {
+            margin: 0;
+            padding-left: 25px;
+            color: #555;
+        }
+
+        .qrcode-instructions li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .qrcode-section {
+                padding: 30px 20px;
+            }
+
+            .qrcode-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .qrcode-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .qrcode-instructions {
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -615,6 +739,53 @@
             <h1>Modernização dos Serviços Digitais</h1>
             <p class="subtitle">Uma nova experiência para o cidadão, mais simples, rápida e acessível</p>
         </div>
+
+        <!-- QR Code Section -->
+        <div class="qrcode-section">
+            <h2>
+                <i class="bi bi-qr-code-scan"></i>
+                Acesse esta Apresentação no Seu Dispositivo
+            </h2>
+            <p>Escaneie o QR Code abaixo com a câmera do seu smartphone ou tablet para acessar esta apresentação em tempo real</p>
+            
+            <div class="qrcode-container">
+                <div class="qrcode-image">
+                    <img src="imagens/qrcode-apresentacao.png" 
+                         alt="QR Code para acessar a apresentação"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="qrcode-placeholder">
+                        <i class="bi bi-qr-code" style="font-size: 4rem; margin-bottom: 15px; color: var(--primary);"></i>
+                        <p style="font-size: 0.9rem; text-align: center; padding: 0 10px; margin: 0;">
+                            <strong style="display: block; margin-bottom: 8px; color: #333;">QR Code não encontrado</strong>
+                            <span style="font-size: 0.85rem;">Adicione a imagem:</span><br>
+                            <code style="background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; color: var(--primary-dark);">imagens/qrcode-apresentacao.png</code>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="qrcode-instructions">
+                <h3>
+                    <i class="bi bi-phone"></i>
+                    Como acessar:
+                </h3>
+                <ol>
+                    <li>Abra o aplicativo de câmera do seu smartphone ou tablet</li>
+                    <li>Aponte a câmera para o QR Code acima</li>
+                    <li>Toque na notificação que aparecerá na tela</li>
+                    <li>A apresentação será aberta automaticamente no seu navegador</li>
+                </ol>
+            </div>
+
+            <div style="margin-top: 20px; padding: 15px; background: rgba(104, 131, 165, 0.1); border-radius: 8px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                <p style="margin: 0; color: var(--primary-dark); font-size: 0.95rem;">
+                    <i class="bi bi-info-circle"></i> 
+                    <strong>Dica:</strong> Mantenha a apresentação aberta no seu dispositivo para acompanhar os detalhes e visualizar as imagens em tamanho ampliado.
+                </p>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
 
         <!-- Section 1 -->
         <div class="content-card">
@@ -1081,7 +1252,7 @@
                             <span class="badge with ms-2">Responsivo</span>
                         </h3>
                         <div class="description">
-                            <p><strong>Lançamento Emitir DAR IPVA (ATF Responsivo)</strong></p>
+                            <p><strong>Consulta de Débitos IPVA (ATF Responsivo)</strong></p>
                             <p>Esta página foi atualizada com design responsivo, funcionando perfeitamente em todos os dispositivos.</p>
                         </div>
                         <ul class="features-list">
