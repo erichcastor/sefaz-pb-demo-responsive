@@ -354,6 +354,75 @@
             }
         }
 
+        /* Screenshot Images */
+        .screenshot-container {
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+        }
+
+        .screenshot-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .screenshot-label {
+            background: var(--primary);
+            color: white;
+            padding: 10px 15px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .screenshot-label.without {
+            background: #dc3545;
+        }
+
+        .screenshot-label.with {
+            background: #28a745;
+        }
+
+        .screenshot-label.menu {
+            background: var(--primary-dark);
+        }
+
+        .comparison-main-section {
+            margin-top: 40px;
+        }
+
+        .comparison-main-section h3 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .menu-demo-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px dashed #dee2e6;
+        }
+
+        .menu-demo-section h3 {
+            color: var(--primary-dark);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+        }
+
+        .menu-demo-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, 0.1);
+            border-left: 5px solid var(--primary);
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .brand-title {
@@ -578,62 +647,181 @@
         <!-- Comparison Section -->
         <div class="content-card comparison-section">
             <h2>8. Veja a diferença: Antes e Depois</h2>
-            <p class="mb-4">Confira exemplos práticos da transformação realizada. Compare páginas que ainda não foram modernizadas com aquelas que já receberam a atualização responsiva.</p>
+            <p class="mb-4">Confira exemplos práticos da transformação realizada. Compare a página principal do ATF antes e depois da modernização responsiva.</p>
             
-            <div class="comparison-grid">
-                <!-- Without Responsive -->
-                <div class="comparison-card without-responsive">
-                    <h3>
-                        <i class="bi bi-x-circle-fill"></i>
-                        Sem Responsividade
-                        <span class="badge without ms-2">Legado</span>
-                    </h3>
-                    <div class="description">
-                        <p><strong>Página legada:</strong> Consulta de Débitos IPVA</p>
-                        <p>Esta página ainda utiliza o layout tradicional, otimizado apenas para desktops.</p>
+            <!-- Comparação de Funcionalidades -->
+            <div class="comparison-main-section">
+                <h3><i class="bi bi-file-earmark-text"></i> Comparação de Funcionalidades: Antes e Depois</h3>
+                <p class="mb-4" style="color: #666; font-style: italic;">A mesma funcionalidade, duas experiências completamente diferentes. Veja como os formulários foram transformados para oferecer uma experiência otimizada em dispositivos móveis.</p>
+                
+                <div class="comparison-grid">
+                    <!-- Without Responsive -->
+                    <div class="comparison-card without-responsive">
+                        <h3>
+                            <i class="bi bi-x-circle-fill"></i>
+                            ATF Não Responsivo
+                            <span class="badge without ms-2">Legado</span>
+                        </h3>
+                        <div class="screenshot-container">
+                            <div class="screenshot-label without">Funcionalidade ATF - Não Responsivo</div>
+                            <!-- SUBSTITUA O SRC ABAIXO PELA IMAGEM 1 (Funcionalidade ATF - Não Responsivo) -->
+                            <img src="imagens/atf-funcionalidade-nao-responsivo.png" 
+                                 alt="Funcionalidade ATF - Não Responsivo (Layout desktop fixo em mobile)" 
+                                 style="width: 100%; height: auto; display: block;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
+                                <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #dc3545;"></i>
+                                <p><strong>Imagem não encontrada</strong></p>
+                                <p>Por favor, adicione a imagem: <code>imagens/atf-funcionalidade-nao-responsivo.png</code></p>
+                                <p style="font-size: 0.9rem; margin-top: 10px;">(Imagem 1 - Formulário legado: layout fixo, menu lateral sempre visível, requer scroll horizontal)</p>
+                            </div>
+                        </div>
+                        <div class="description mt-3">
+                            <p><strong>Problemas do layout legado em mobile:</strong></p>
+                            <ul class="features-list">
+                                <li>Menu lateral fixo ocupa espaço valioso</li>
+                                <li>Layout de duas colunas não se adapta</li>
+                                <li>Formulários com campos pequenos e difíceis de tocar</li>
+                                <li>Requer zoom e scroll horizontal constante</li>
+                                <li>Elementos podem ficar cortados ou inacessíveis</li>
+                                <li>Experiência frustrante para o usuário mobile</li>
+                            </ul>
+                        </div>
                     </div>
-                    <ul class="features-list">
-                        <li>Layout fixo para desktop</li>
-                        <li>Dificulta navegação em mobile</li>
-                        <li>Tabelas não adaptáveis</li>
-                        <li>Formulários com campos pequenos</li>
-                        <li>Requer zoom e scroll horizontal</li>
-                    </ul>
-                    <div class="link-container">
-                        <a href="https://www.sefaz.pb.gov.br/servirtual/ipva/consultar-debitos" 
-                           target="_blank" 
-                           class="btn-link">
-                            <i class="bi bi-box-arrow-up-right"></i>
-                            Ver página legada
-                        </a>
+
+                    <!-- With Responsive -->
+                    <div class="comparison-card with-responsive">
+                        <h3>
+                            <i class="bi bi-check-circle-fill"></i>
+                            ATF Responsivo
+                            <span class="badge with ms-2">Modernizado</span>
+                        </h3>
+                        <div class="screenshot-container">
+                            <div class="screenshot-label with">Funcionalidade ATF - Responsivo</div>
+                            <!-- SUBSTITUA O SRC ABAIXO PELA IMAGEM 2 (Funcionalidade ATF - Responsivo) -->
+                            <img src="imagens/atf-funcionalidade-responsivo.png" 
+                                 alt="Funcionalidade ATF - Responsivo (Layout mobile otimizado)" 
+                                 style="width: 100%; height: auto; display: block;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
+                                <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #28a745;"></i>
+                                <p><strong>Imagem não encontrada</strong></p>
+                                <p>Por favor, adicione a imagem: <code>imagens/atf-funcionalidade-responsivo.png</code></p>
+                                <p style="font-size: 0.9rem; margin-top: 10px;">(Imagem 2 - Formulário modernizado: layout adaptável, elementos empilhados, otimizado para toque)</p>
+                            </div>
+                        </div>
+                        <div class="description mt-3">
+                            <p><strong>Melhorias implementadas:</strong></p>
+                            <ul class="features-list">
+                                <li>Header compacto com menu hambúrguer (economiza espaço)</li>
+                                <li>Layout de uma coluna em mobile (melhor legibilidade)</li>
+                                <li>Formulários com campos grandes e fáceis de tocar</li>
+                                <li>Elementos empilhados verticalmente (sem scroll horizontal)</li>
+                                <li>Botões dimensionados para interação por toque</li>
+                                <li>Experiência fluida e intuitiva em qualquer dispositivo</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- With Responsive -->
-                <div class="comparison-card with-responsive">
-                    <h3>
-                        <i class="bi bi-check-circle-fill"></i>
-                        Com Responsividade
-                        <span class="badge with ms-2">Modernizado</span>
-                    </h3>
-                    <div class="description">
-                        <p><strong>Página modernizada:</strong> Consulta de Débitos IPVA (ATF Responsivo)</p>
-                        <p>Esta página foi atualizada com design responsivo, funcionando perfeitamente em todos os dispositivos.</p>
+            <!-- Menu Colapsável -->
+            <div class="menu-demo-section">
+                <h3><i class="bi bi-list"></i> Menu Colapsável (Offcanvas)</h3>
+                <div class="menu-demo-card">
+                    <p>Uma das principais melhorias do ATF Responsivo é o <strong>menu colapsável</strong> que se adapta automaticamente ao tamanho da tela.</p>
+                    
+                    <div class="screenshot-container" style="max-width: 500px; margin: 20px auto;">
+                        <div class="screenshot-label menu">Menu Colapsável ATF Responsivo</div>
+                        <!-- SUBSTITUA O SRC ABAIXO PELA IMAGEM 3 (Menu Colapsável ATF Responsivo) -->
+                        <img src="imagens/atf-menu-colapsavel.png" 
+                             alt="Menu Colapsável ATF Responsivo (Menu offcanvas aberto em mobile)" 
+                             style="width: 100%; height: auto; display: block;"
+                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                        <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
+                            <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: var(--primary);"></i>
+                            <p><strong>Imagem não encontrada</strong></p>
+                            <p>Por favor, adicione a imagem: <code>imagens/atf-menu-colapsavel.png</code></p>
+                            <p style="font-size: 0.9rem; margin-top: 10px;">(Imagem 3 - Menu offcanvas aberto em mobile)</p>
+                        </div>
                     </div>
-                    <ul class="features-list">
-                        <li>Layout adaptável a qualquer tela</li>
-                        <li>Navegação otimizada para mobile</li>
-                        <li>Tabelas com scroll inteligente</li>
-                        <li>Formulários touch-friendly</li>
-                        <li>Experiência fluida em todos os dispositivos</li>
-                    </ul>
-                    <div class="link-container">
-                        <a href="https://www4.sefaz.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=ARR_350&idSERVirtual=S" 
-                           target="_blank" 
-                           class="btn-link">
-                            <i class="bi bi-box-arrow-up-right"></i>
-                            Ver página modernizada
-                        </a>
+
+                    <div class="features-grid" style="margin-top: 20px;">
+                        <div class="feature-item">
+                            <h4><i class="bi bi-phone"></i> Em Mobile</h4>
+                            <p>Menu lateral vira um painel deslizante (offcanvas) que abre ao tocar no ícone hambúrguer</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4><i class="bi bi-tablet"></i> Em Tablet</h4>
+                            <p>Menu pode ser recolhido/expandido conforme necessidade do usuário</p>
+                        </div>
+                        <div class="feature-item">
+                            <h4><i class="bi bi-laptop"></i> Em Desktop</h4>
+                            <p>Menu lateral tradicional com opção de recolher para ganhar mais espaço</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exemplos de Serviços -->
+            <div class="comparison-main-section" style="margin-top: 50px;">
+                <h3><i class="bi bi-link-45deg"></i> Exemplos de Serviços</h3>
+                
+                <div class="comparison-grid">
+                    <!-- Without Responsive Service -->
+                    <div class="comparison-card without-responsive">
+                        <h3>
+                            <i class="bi bi-x-circle-fill"></i>
+                            Serviço Legado
+                            <span class="badge without ms-2">Não Responsivo</span>
+                        </h3>
+                        <div class="description">
+                            <p><strong>Consulta de Débitos IPVA</strong></p>
+                            <p>Esta página ainda utiliza o layout tradicional, otimizado apenas para desktops.</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Layout fixo para desktop</li>
+                            <li>Dificulta navegação em mobile</li>
+                            <li>Tabelas não adaptáveis</li>
+                            <li>Formulários com campos pequenos</li>
+                            <li>Requer zoom e scroll horizontal</li>
+                        </ul>
+                        <div class="link-container">
+                            <a href="https://www.sefaz.pb.gov.br/servirtual/ipva/consultar-debitos" 
+                               target="_blank" 
+                               class="btn-link">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                                Ver página legada
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- With Responsive Service -->
+                    <div class="comparison-card with-responsive">
+                        <h3>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Serviço Modernizado
+                            <span class="badge with ms-2">Responsivo</span>
+                        </h3>
+                        <div class="description">
+                            <p><strong>Consulta de Débitos IPVA (ATF Responsivo)</strong></p>
+                            <p>Esta página foi atualizada com design responsivo, funcionando perfeitamente em todos os dispositivos.</p>
+                        </div>
+                        <ul class="features-list">
+                            <li>Layout adaptável a qualquer tela</li>
+                            <li>Navegação otimizada para mobile</li>
+                            <li>Tabelas com scroll inteligente</li>
+                            <li>Formulários touch-friendly</li>
+                            <li>Experiência fluida em todos os dispositivos</li>
+                        </ul>
+                        <div class="link-container">
+                            <a href="https://www4.sefaz.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=ARR_350&idSERVirtual=S" 
+                               target="_blank" 
+                               class="btn-link">
+                                <i class="bi bi-box-arrow-up-right"></i>
+                                Ver página modernizada
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -643,8 +831,8 @@
                     <i class="bi bi-info-circle"></i> Dica para testar
                 </h4>
                 <p style="margin: 0;">
-                    Abra os links acima em seu navegador e redimensione a janela (ou use o modo de desenvolvedor do navegador) para ver a diferença. 
-                    A página modernizada se adapta automaticamente, enquanto a legada mantém o layout fixo.
+                    Abra os links acima em seu navegador e redimensione a janela (ou use o modo de desenvolvedor do navegador - F12) para ver a diferença. 
+                    A página modernizada se adapta automaticamente, enquanto a legada mantém o layout fixo. Teste também em diferentes dispositivos móveis!
                 </p>
             </div>
         </div>
