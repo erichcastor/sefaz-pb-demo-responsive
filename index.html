@@ -228,6 +228,132 @@
             left: 0;
         }
 
+        /* Comparison Section */
+        .comparison-section {
+            margin-top: 50px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .comparison-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, 0.1);
+            border-top: 5px solid;
+            transition: transform 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .comparison-card.without-responsive {
+            border-top-color: #dc3545;
+        }
+
+        .comparison-card.with-responsive {
+            border-top-color: #28a745;
+        }
+
+        .comparison-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .comparison-card.without-responsive h3 {
+            color: #dc3545;
+        }
+
+        .comparison-card.with-responsive h3 {
+            color: #28a745;
+        }
+
+        .comparison-card .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge.without {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .badge.with {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .comparison-card .description {
+            margin: 15px 0;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .comparison-card .link-container {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .comparison-card .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .comparison-card .btn-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .comparison-card .features-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .comparison-card .features-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .comparison-card.without-responsive .features-list li:before {
+            content: "✗";
+            position: absolute;
+            left: 0;
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .comparison-card.with-responsive .features-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .brand-title {
@@ -445,6 +571,82 @@
                 <li>Respeito ao tempo do cidadão</li>
                 <li><strong>Equidade no acesso digital</strong></li>
             </ul>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Comparison Section -->
+        <div class="content-card comparison-section">
+            <h2>8. Veja a diferença: Antes e Depois</h2>
+            <p class="mb-4">Confira exemplos práticos da transformação realizada. Compare páginas que ainda não foram modernizadas com aquelas que já receberam a atualização responsiva.</p>
+            
+            <div class="comparison-grid">
+                <!-- Without Responsive -->
+                <div class="comparison-card without-responsive">
+                    <h3>
+                        <i class="bi bi-x-circle-fill"></i>
+                        Sem Responsividade
+                        <span class="badge without ms-2">Legado</span>
+                    </h3>
+                    <div class="description">
+                        <p><strong>Página legada:</strong> Consulta de Débitos IPVA</p>
+                        <p>Esta página ainda utiliza o layout tradicional, otimizado apenas para desktops.</p>
+                    </div>
+                    <ul class="features-list">
+                        <li>Layout fixo para desktop</li>
+                        <li>Dificulta navegação em mobile</li>
+                        <li>Tabelas não adaptáveis</li>
+                        <li>Formulários com campos pequenos</li>
+                        <li>Requer zoom e scroll horizontal</li>
+                    </ul>
+                    <div class="link-container">
+                        <a href="https://www.sefaz.pb.gov.br/servirtual/ipva/consultar-debitos" 
+                           target="_blank" 
+                           class="btn-link">
+                            <i class="bi bi-box-arrow-up-right"></i>
+                            Ver página legada
+                        </a>
+                    </div>
+                </div>
+
+                <!-- With Responsive -->
+                <div class="comparison-card with-responsive">
+                    <h3>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Com Responsividade
+                        <span class="badge with ms-2">Modernizado</span>
+                    </h3>
+                    <div class="description">
+                        <p><strong>Página modernizada:</strong> Consulta de Débitos IPVA (ATF Responsivo)</p>
+                        <p>Esta página foi atualizada com design responsivo, funcionando perfeitamente em todos os dispositivos.</p>
+                    </div>
+                    <ul class="features-list">
+                        <li>Layout adaptável a qualquer tela</li>
+                        <li>Navegação otimizada para mobile</li>
+                        <li>Tabelas com scroll inteligente</li>
+                        <li>Formulários touch-friendly</li>
+                        <li>Experiência fluida em todos os dispositivos</li>
+                    </ul>
+                    <div class="link-container">
+                        <a href="https://www4.sefaz.pb.gov.br/atf/seg/SEGf_AcessarFuncao.jsp?cdFuncao=ARR_350&idSERVirtual=S" 
+                           target="_blank" 
+                           class="btn-link">
+                            <i class="bi bi-box-arrow-up-right"></i>
+                            Ver página modernizada
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-4" style="background-color: #e7f3ff; border-left: 4px solid var(--primary); border-radius: 5px; padding: 20px;">
+                <h4 style="color: var(--primary-dark); margin-bottom: 10px;">
+                    <i class="bi bi-info-circle"></i> Dica para testar
+                </h4>
+                <p style="margin: 0;">
+                    Abra os links acima em seu navegador e redimensione a janela (ou use o modo de desenvolvedor do navegador) para ver a diferença. 
+                    A página modernizada se adapta automaticamente, enquanto a legada mantém o layout fixo.
+                </p>
+            </div>
         </div>
 
         <!-- Final Section -->
