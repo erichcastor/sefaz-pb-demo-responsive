@@ -375,20 +375,19 @@
             box-shadow: 2px 10px 20px 0 rgba(69, 65, 78, 0.15);
         }
 
-        /* Image Zoom/Lightbox */
-        .theme-image-zoom {
-            cursor: zoom-in;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .theme-image-zoom:hover {
-            opacity: 0.85;
-            transform: scale(1.02);
-        }
-
+        /* Image Zoom/Lightbox - Aplicado a todas as imagens */
         .screenshot-container {
             position: relative;
+        }
+
+        .screenshot-container img:not(#zoomedImage) {
+            cursor: zoom-in;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot-container img:not(#zoomedImage):hover {
+            opacity: 0.85;
+            transform: scale(1.02);
         }
 
         .screenshot-container::after {
@@ -404,6 +403,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
+            z-index: 10;
         }
 
         .screenshot-container:hover::after {
@@ -686,10 +686,7 @@
                             </div>
                             <img src="imagens/atf-tema-claro.png" 
                                  alt="ATF - Tema Claro" 
-                                 class="theme-image-zoom"
                                  style="width: 100%; height: auto; display: block;"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#modalTemaClaro"
                                  onclick="openImageModal('imagens/atf-tema-claro.png', 'Tema Claro')"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; padding: 40px; text-align: center; color: #666; background: #ffffff; min-height: 200px;">
@@ -714,10 +711,7 @@
                             </div>
                             <img src="imagens/atf-tema-escuro.png" 
                                  alt="ATF - Tema Escuro" 
-                                 class="theme-image-zoom"
                                  style="width: 100%; height: auto; display: block;"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#modalTemaEscuro"
                                  onclick="openImageModal('imagens/atf-tema-escuro.png', 'Tema Escuro')"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; padding: 40px; text-align: center; color: #666; background: #1e1e1e; min-height: 200px;">
@@ -742,10 +736,7 @@
                             </div>
                             <img src="imagens/atf-tema-leitura.png" 
                                  alt="ATF - Modo Leitura" 
-                                 class="theme-image-zoom"
                                  style="width: 100%; height: auto; display: block;"
-                                 data-bs-toggle="modal"
-                                 data-bs-target="#modalTemaLeitura"
                                  onclick="openImageModal('imagens/atf-tema-leitura.png', 'Modo Leitura')"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f5f0e6; min-height: 200px;">
@@ -878,6 +869,7 @@
                             <img src="imagens/atf-funcionalidade-nao-responsivo.png" 
                                  alt="Funcionalidade ATF - Não Responsivo (Layout desktop fixo em mobile)" 
                                  style="width: 100%; height: auto; display: block;"
+                                 onclick="openImageModal('imagens/atf-funcionalidade-nao-responsivo.png', 'Funcionalidade ATF - Não Responsivo')"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
                                 <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #dc3545;"></i>
@@ -912,6 +904,7 @@
                             <img src="imagens/atf-funcionalidade-responsivo.png" 
                                  alt="Funcionalidade ATF - Responsivo (Layout mobile otimizado)" 
                                  style="width: 100%; height: auto; display: block;"
+                                 onclick="openImageModal('imagens/atf-funcionalidade-responsivo.png', 'Funcionalidade ATF - Responsivo')"
                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                             <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
                                 <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #28a745;"></i>
@@ -947,6 +940,7 @@
                         <img src="imagens/atf-menu-colapsavel.png" 
                              alt="Menu Colapsável ATF Responsivo (Menu offcanvas aberto em mobile)" 
                              style="width: 100%; height: auto; display: block;"
+                             onclick="openImageModal('imagens/atf-menu-colapsavel.png', 'Menu Colapsável ATF Responsivo')"
                              onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
                         <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
                             <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: var(--primary);"></i>
