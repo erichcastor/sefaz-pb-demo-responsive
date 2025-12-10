@@ -354,6 +354,33 @@
             }
         }
 
+        /* Themes Gallery */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .theme-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 2px 10px 20px 0 rgba(69, 65, 78, 0.15);
+        }
+
+        @media (max-width: 768px) {
+            .themes-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Screenshot Images */
         .screenshot-container {
             margin: 20px 0;
@@ -564,7 +591,99 @@
             <h2>4. Acessibilidade e personalização</h2>
             <p>O novo portal oferece <strong>três modos de visualização</strong> (claro, escuro e leitura), permitindo que cada cidadão escolha a experiência mais confortável para seus olhos.</p>
             <p><strong>Todas as informações permanecem acessíveis</strong>, independentemente da preferência visual ou das condições de iluminação do ambiente.</p>
-            <p class="mt-3"><em>Tecnologia moderna a serviço da confiança pública e do bem-estar do cidadão.</em></p>
+            
+            <!-- Temas - Galeria de Imagens -->
+            <div class="themes-gallery" style="margin-top: 30px;">
+                <h3 style="color: var(--primary-dark); font-size: 1.4rem; margin-bottom: 25px; padding-bottom: 10px; border-bottom: 2px solid var(--primary);">
+                    <i class="bi bi-palette"></i> Visualize os Temas Disponíveis
+                </h3>
+                
+                <div class="themes-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 20px;">
+                    <!-- Tema Claro -->
+                    <div class="theme-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, 0.1); border: 2px solid #e9ecef;">
+                        <div class="screenshot-container" style="margin: 0; border: none; border-radius: 0;">
+                            <div class="screenshot-label" style="background: #f8f9fa; color: #333; border-bottom: 2px solid #dee2e6;">
+                                <i class="bi bi-sun"></i> Tema Claro
+                            </div>
+                            <img src="imagens/atf-tema-claro.png" 
+                                 alt="ATF - Tema Claro" 
+                                 style="width: 100%; height: auto; display: block;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="display:none; padding: 40px; text-align: center; color: #666; background: #ffffff; min-height: 200px;">
+                                <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #ffc107;"></i>
+                                <p><strong>Imagem não encontrada</strong></p>
+                                <p>Por favor, adicione a imagem: <code>imagens/atf-tema-claro.png</code></p>
+                                <p style="font-size: 0.9rem; margin-top: 10px;">(Imagem 1 - Tema Claro)</p>
+                            </div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">
+                                <strong>Ideal para:</strong> Ambientes bem iluminados e uso durante o dia. Oferece alto contraste e clareza visual.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tema Escuro -->
+                    <div class="theme-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, 0.1); border: 2px solid #343a40;">
+                        <div class="screenshot-container" style="margin: 0; border: none; border-radius: 0;">
+                            <div class="screenshot-label" style="background: #1e1e1e; color: #f1f1f1; border-bottom: 2px solid #495057;">
+                                <i class="bi bi-moon-stars"></i> Tema Escuro
+                            </div>
+                            <img src="imagens/atf-tema-escuro.png" 
+                                 alt="ATF - Tema Escuro" 
+                                 style="width: 100%; height: auto; display: block;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="display:none; padding: 40px; text-align: center; color: #666; background: #1e1e1e; min-height: 200px;">
+                                <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #6c757d;"></i>
+                                <p style="color: #f1f1f1;"><strong>Imagem não encontrada</strong></p>
+                                <p style="color: #f1f1f1;">Por favor, adicione a imagem: <code style="color: #adb5bd;">imagens/atf-tema-escuro.png</code></p>
+                                <p style="font-size: 0.9rem; margin-top: 10px; color: #adb5bd;">(Imagem 2 - Tema Escuro)</p>
+                            </div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">
+                                <strong>Ideal para:</strong> Ambientes com pouca luz e uso noturno. Reduz fadiga visual e economiza bateria em dispositivos OLED.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Tema Modo Leitura -->
+                    <div class="theme-card" style="background: white; border-radius: 10px; overflow: hidden; box-shadow: 2px 6px 15px 0 rgba(69, 65, 78, 0.1); border: 2px solid #d4a574;">
+                        <div class="screenshot-container" style="margin: 0; border: none; border-radius: 0;">
+                            <div class="screenshot-label" style="background: #f5f0e6; color: #3b3024; border-bottom: 2px solid #c9a574;">
+                                <i class="bi bi-book"></i> Modo Leitura
+                            </div>
+                            <img src="imagens/atf-tema-leitura.png" 
+                                 alt="ATF - Modo Leitura" 
+                                 style="width: 100%; height: auto; display: block;"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f5f0e6; min-height: 200px;">
+                                <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #8b6914;"></i>
+                                <p style="color: #3b3024;"><strong>Imagem não encontrada</strong></p>
+                                <p style="color: #3b3024;">Por favor, adicione a imagem: <code style="color: #6b5b3d;">imagens/atf-tema-leitura.png</code></p>
+                                <p style="font-size: 0.9rem; margin-top: 10px; color: #6b5b3d;">(Imagem 3 - Modo Leitura)</p>
+                            </div>
+                        </div>
+                        <div style="padding: 15px;">
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">
+                                <strong>Ideal para:</strong> Leitura prolongada de documentos. Fundo bege suave que reduz cansaço visual e melhora a concentração.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert alert-info mt-4" style="background-color: #e7f3ff; border-left: 4px solid var(--primary); border-radius: 5px; padding: 20px; margin-top: 30px;">
+                    <h4 style="color: var(--primary-dark); margin-bottom: 10px;">
+                        <i class="bi bi-info-circle"></i> Como alterar o tema
+                    </h4>
+                    <p style="margin: 0;">
+                        Os usuários podem alternar entre os temas através do botão flutuante localizado no canto inferior direito da tela. 
+                        A preferência é salva automaticamente e mantida em todas as sessões futuras.
+                    </p>
+                </div>
+            </div>
+
+            <p class="mt-4"><em>Tecnologia moderna a serviço da confiança pública e do bem-estar do cidadão.</em></p>
         </div>
 
         <div class="section-divider"></div>
