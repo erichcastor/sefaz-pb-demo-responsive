@@ -921,6 +921,84 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Comparação de Telas Completas -->
+                <div style="margin-top: 50px; padding-top: 30px; border-top: 2px dashed #dee2e6;">
+                    <h3 style="color: var(--primary-dark); font-size: 1.4rem; margin-bottom: 20px;">
+                        <i class="bi bi-window-fullscreen"></i> Comparação de Telas Completas
+                    </h3>
+                    <p class="mb-4" style="color: #666; font-style: italic;">Veja a diferença entre as telas completas do sistema. Compare o layout legado com o design responsivo modernizado.</p>
+                    
+                    <div class="comparison-grid">
+                        <!-- Tela Completa - Não Responsivo -->
+                        <div class="comparison-card without-responsive">
+                            <h3>
+                                <i class="bi bi-x-circle-fill"></i>
+                                Tela Completa - ATF Não Responsivo
+                                <span class="badge without ms-2">Legado</span>
+                            </h3>
+                            <div class="screenshot-container">
+                                <div class="screenshot-label without">Tela Completa ATF - Não Responsivo</div>
+                                <img src="imagens/atf-tela-completa-nao-responsivo.png" 
+                                     alt="Tela Completa ATF - Não Responsivo (Layout desktop fixo, menu lateral sempre visível, tabelas largas)" 
+                                     style="width: 100%; height: auto; display: block;"
+                                     onclick="openImageModal('imagens/atf-tela-completa-nao-responsivo.png', 'Tela Completa ATF - Não Responsivo')"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
+                                    <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #dc3545;"></i>
+                                    <p><strong>Imagem não encontrada</strong></p>
+                                    <p>Por favor, adicione a imagem: <code>imagens/atf-tela-completa-nao-responsivo.png</code></p>
+                                    <p style="font-size: 0.9rem; margin-top: 10px;">(Imagem 1 - Tela completa legada: layout fixo, menu lateral sempre visível, tabelas com muitas colunas)</p>
+                                </div>
+                            </div>
+                            <div class="description mt-3">
+                                <p><strong>Características do sistema legado:</strong></p>
+                                <ul class="features-list">
+                                    <li>Menu lateral fixo ocupa espaço permanente</li>
+                                    <li>Tabelas com muitas colunas (requer scroll horizontal)</li>
+                                    <li>Layout de duas colunas não se adapta</li>
+                                    <li>Elementos densos e difíceis de navegar em mobile</li>
+                                    <li>Informações podem ficar cortadas ou inacessíveis</li>
+                                    <li>Experiência inadequada para dispositivos móveis</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tela Completa - Responsivo -->
+                        <div class="comparison-card with-responsive">
+                            <h3>
+                                <i class="bi bi-check-circle-fill"></i>
+                                Tela Completa - ATF Responsivo
+                                <span class="badge with ms-2">Modernizado</span>
+                            </h3>
+                            <div class="screenshot-container">
+                                <div class="screenshot-label with">Tela Completa ATF - Responsivo</div>
+                                <img src="imagens/atf-tela-completa-responsivo.png" 
+                                     alt="Tela Completa ATF - Responsivo (Layout adaptável, menu colapsável, tabelas responsivas)" 
+                                     style="width: 100%; height: auto; display: block;"
+                                     onclick="openImageModal('imagens/atf-tela-completa-responsivo.png', 'Tela Completa ATF - Responsivo')"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                <div style="display:none; padding: 40px; text-align: center; color: #666; background: #f8f9fa;">
+                                    <i class="bi bi-image" style="font-size: 3rem; margin-bottom: 10px; color: #28a745;"></i>
+                                    <p><strong>Imagem não encontrada</strong></p>
+                                    <p>Por favor, adicione a imagem: <code>imagens/atf-tela-completa-responsivo.png</code></p>
+                                    <p style="font-size: 0.9rem; margin-top: 10px;">(Imagem 2 - Tela completa modernizada: layout adaptável, menu colapsável, tabelas responsivas)</p>
+                                </div>
+                            </div>
+                            <div class="description mt-3">
+                                <p><strong>Melhorias do sistema modernizado:</strong></p>
+                                <ul class="features-list">
+                                    <li>Menu colapsável que economiza espaço em mobile</li>
+                                    <li>Tabelas com scroll horizontal inteligente</li>
+                                    <li>Layout que se adapta automaticamente</li>
+                                    <li>Elementos organizados para melhor navegação</li>
+                                    <li>Todas as informações acessíveis em qualquer dispositivo</li>
+                                    <li>Experiência otimizada para desktop, tablet e mobile</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Menu Colapsável -->
