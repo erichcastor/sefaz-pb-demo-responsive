@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acompanhamento Migracao Bootstrap - ATF</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a1f2e;
+            --bg-card-hover: #252b3d;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-violet: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: #2d3748;
+            --gradient-cyan: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            --gradient-emerald: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-amber: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-rose: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(ellipse, rgba(6, 182, 212, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .logo-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--bg-card);
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--accent-cyan);
+        }
+
+        .logo-badge::before {
+            content: '\25C6';
+            color: var(--accent-emerald);
+        }
+
+        h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .date-info {
+            margin-top: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.cyan::before { background: var(--gradient-cyan); }
+        .stat-card.emerald::before { background: var(--gradient-emerald); }
+        .stat-card.amber::before { background: var(--gradient-amber); }
+        .stat-card.rose::before { background: var(--gradient-rose); }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-card.cyan .stat-value { color: var(--accent-cyan); }
+        .stat-card.emerald .stat-value { color: var(--accent-emerald); }
+        .stat-card.amber .stat-value { color: var(--accent-amber); }
+        .stat-card.rose .stat-value { color: var(--accent-rose); }
+
+        .stat-detail {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--gradient-cyan);
+            border-radius: 2px;
+        }
+
+        .global-progress {
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar-container {
+            background: var(--bg-secondary);
+            height: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-cyan);
+            border-radius: 12px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-percentage {
+            font-weight: 600;
+            color: var(--accent-cyan);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Table Section */
+        .table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .table-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--bg-secondary);
+        }
+
+        th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        tbody tr {
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .module-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .module-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.5rem;
+        }
+
+        .number {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .number.highlight {
+            color: var(--accent-emerald);
+            font-weight: 600;
+        }
+
+        .mini-progress {
+            width: 100px;
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .mini-progress-bar {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-badge.advanced {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-emerald);
+        }
+
+        .status-badge.started {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent-amber);
+        }
+
+        .status-badge.initial {
+            background: rgba(244, 63, 94, 0.15);
+            color: var(--accent-rose);
+        }
+
+        .status-badge.not-started {
+            background: rgba(100, 116, 139, 0.15);
+            color: var(--text-muted);
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.advanced .status-dot { background: var(--accent-emerald); }
+        .status-badge.started .status-dot { background: var(--accent-amber); }
+        .status-badge.initial .status-dot { background: var(--accent-rose); }
+        .status-badge.not-started .status-dot { background: var(--text-muted); }
+
+        /* Status Summary */
+        .status-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .status-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .status-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .status-icon.green { background: rgba(16, 185, 129, 0.15); }
+        .status-icon.yellow { background: rgba(245, 158, 11, 0.15); }
+        .status-icon.red { background: rgba(244, 63, 94, 0.15); }
+        .status-icon.gray { background: rgba(100, 116, 139, 0.15); }
+
+        .status-content h4 {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .status-content p {
+            font-size: 1.25rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Priority Section */
+        .priority-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .priority-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .priority-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .priority-item:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(4px);
+        }
+
+        .priority-item.high { border-left-color: var(--accent-rose); }
+        .priority-item.medium { border-left-color: var(--accent-amber); }
+        .priority-item.low { border-left-color: var(--accent-emerald); }
+
+        .priority-rank {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .priority-item.high .priority-rank { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); }
+        .priority-item.medium .priority-rank { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .priority-item.low .priority-rank { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
+
+        .priority-info {
+            flex: 1;
+        }
+
+        .priority-module {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .priority-reason {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-item.high .priority-badge { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); }
+        .priority-item.medium .priority-badge { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .priority-item.low .priority-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
+
+        /* Detailed List */
+        .detailed-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .module-card {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .module-card:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .module-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .module-card-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .module-card-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--accent-violet);
+            background: rgba(139, 92, 246, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+
+        .module-card-stats {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .module-card-stat span {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        .module-card-stat.done span { color: var(--accent-emerald); }
+        .module-card-stat.pending span { color: var(--accent-rose); }
+
+        /* Accordion Details */
+        .details-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .accordion {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .accordion-item {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .accordion-header:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .accordion-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+            color: var(--accent-cyan);
+        }
+
+        .accordion-item.open .accordion-icon {
+            transform: rotate(90deg);
+        }
+
+        .accordion-module-code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            margin-right: 0.75rem;
+        }
+
+        .accordion-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+            flex: 1;
+        }
+
+        .accordion-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-emerald);
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .accordion-item.open .accordion-content {
+            max-height: 2000px;
+        }
+
+        .accordion-item.visao-geral-atf.open .accordion-content {
+            max-height: 50000px;
+        }
+
+        .accordion-body {
+            padding: 0 1.25rem 1rem 1.25rem;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-card);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .file-item:hover {
+            background: var(--bg-card-hover);
+            color: var(--accent-cyan);
+        }
+
+        .file-item::before {
+            content: '\25B8';
+            margin-right: 0.5rem;
+            color: var(--accent-emerald);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-card {
+                padding: 1.25rem;
+            }
+
+            .stat-value {
+                font-size: 1.75rem;
+            }
+
+            th, td {
+                padding: 0.75rem;
+            }
+
+            .mini-progress {
+                width: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo-badge">ATF Responsivo</div>
+            <h1>Acompanhamento Migracao Bootstrap</h1>
+            <p class="subtitle">Dashboard de progresso da migracao das interfaces para Bootstrap 5.3</p>
+            <p class="date-info">Atualizado em: 23 de Janeiro de 2026 - 18h</p>
+        </header>
+        <!-- Servicos Cidadao e Empresa -->
+        <div class="details-section">
+            <div class="section-header">
+                <h2 class="section-title">Servicos para Cidadao e Empresa</h2>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">
+                Analise das paginas listadas como Servicos para Cidadao (55 JSPs) e Servicos para Empresa (142 JSPs).
+                Status obtido via verificacao de uso de Bootstrap / ca:bs- no codigo-fonte.
+            </p>
+
+            <!-- Visao Cidadao -->
+            <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">Visao individual &mdash; Servicos para Cidadao</h3>
+            <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                <div class="stat-card cyan">
+                    <div class="stat-label">Total JSPs</div>
+                    <div class="stat-value">54</div>
+                    <div class="stat-detail">Itens unicos na lista Cidadao</div>
+                </div>
+                <div class="stat-card emerald">
+                    <div class="stat-label">Migrados</div>
+                    <div class="stat-value">52</div>
+                    <div class="stat-detail">Paginas com Bootstrap 5.3</div>
+                </div>
+                <div class="stat-card rose">
+                    <div class="stat-label">Restantes</div>
+                    <div class="stat-value">2</div>
+                    <div class="stat-detail">DadosFrete, EmitirDARParcelamentoIPVA2</div>
+                </div>
+                <div class="stat-card amber">
+                    <div class="stat-label">Progresso</div>
+                    <div class="stat-value">96,3%</div>
+                    <div class="stat-detail">52 de 54 paginas migradas</div>
+                </div>
+            </div>
+            <div class="progress-section" style="margin-bottom: 2.5rem;">
+                <div class="global-progress">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 96.3%; background: var(--gradient-emerald);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>52 de 54 paginas migradas (Cidadao)</span>
+                        <span class="progress-percentage">96,3%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visao Empresa -->
+            <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">Visao individual &mdash; Servicos para Empresa</h3>
+            <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                <div class="stat-card cyan">
+                    <div class="stat-label">Total JSPs</div>
+                    <div class="stat-value">142</div>
+                    <div class="stat-detail">Itens na lista Empresa</div>
+                </div>
+                <div class="stat-card emerald">
+                    <div class="stat-label">Migrados</div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-detail">Paginas com Bootstrap 5.3</div>
+                </div>
+                <div class="stat-card rose">
+                    <div class="stat-label">Restantes</div>
+                    <div class="stat-value">116</div>
+                    <div class="stat-detail">Paginas pendentes</div>
+                </div>
+                <div class="stat-card amber">
+                    <div class="stat-label">Progresso</div>
+                    <div class="stat-value">16,9%</div>
+                    <div class="stat-detail">24 de 142 (+ 2 N/A)</div>
+                </div>
+            </div>
+            <div class="progress-section" style="margin-bottom: 2.5rem;">
+                <div class="global-progress">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 16.9%; background: var(--gradient-amber);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>24 de 142 paginas migradas (Empresa)</span>
+                        <span class="progress-percentage">16,9%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visao Total (Cidadao + Empresa) -->
+            <h3 class="section-title" style="font-size: 1.1rem; margin-bottom: 1rem;">Visao total &mdash; Cidadao + Empresa</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                Soma das listas Cidadao (54 unicos) e Empresa (142). Alguns JSPs constam em ambas as listas.
+            </p>
+            <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                <div class="stat-card cyan">
+                    <div class="stat-label">Total JSPs</div>
+                    <div class="stat-value">196</div>
+                    <div class="stat-detail">54 (Cidadao) + 142 (Empresa)</div>
+                </div>
+                <div class="stat-card emerald">
+                    <div class="stat-label">Migrados</div>
+                    <div class="stat-value">76</div>
+                    <div class="stat-detail">52 (Cidadao) + 24 (Empresa)</div>
+                </div>
+                <div class="stat-card rose">
+                    <div class="stat-label">Restantes</div>
+                    <div class="stat-value">118</div>
+                    <div class="stat-detail">Paginas pendentes (+ 2 N/A)</div>
+                </div>
+                <div class="stat-card amber">
+                    <div class="stat-label">Progresso</div>
+                    <div class="stat-value">38,8%</div>
+                    <div class="stat-detail">76 de 196 considerando ambos</div>
+                </div>
+            </div>
+            <div class="progress-section" style="margin-bottom: 2.5rem;">
+                <div class="global-progress">
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="width: 38.8%; background: var(--gradient-cyan);"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span>76 de 196 paginas migradas (Cidadao + Empresa)</span>
+                        <span class="progress-percentage">38,8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalhamento por Modulo - Cidadao -->
+            <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">Detalhamento por Modulo &mdash; Servicos para Cidadao</h3>
+            <div class="table-container" style="margin-bottom: 2.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modulo</th>
+                            <th>Total JSPs</th>
+                            <th>Migrados</th>
+                            <th>Restantes</th>
+                            <th>Progresso</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="module-code">CAD</span><span class="module-name">Cadastro</span></td>
+                            <td class="number">2</td>
+                            <td class="number highlight">2</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DIA</span><span class="module-name">Divida Ativa</span></td>
+                            <td class="number">4</td>
+                            <td class="number highlight">3</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 75%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>75%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">ARR</span><span class="module-name">Arrecadacao</span></td>
+                            <td class="number">6</td>
+                            <td class="number highlight">6</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">RHM</span><span class="module-name">Recursos Humanos</span></td>
+                            <td class="number">7</td>
+                            <td class="number highlight">7</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">PRO</span><span class="module-name">Protocolo/Processos</span></td>
+                            <td class="number">8</td>
+                            <td class="number highlight">8</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">FIS</span><span class="module-name">Fiscalizacao</span></td>
+                            <td class="number">22</td>
+                            <td class="number highlight">21</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 95.5%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>95,5%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DOE</span><span class="module-name">Diario Oficial</span></td>
+                            <td class="number">1</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DEC</span><span class="module-name">Declaracao</span></td>
+                            <td class="number">1</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">LEV</span><span class="module-name">Leilao Veicular</span></td>
+                            <td class="number">1</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">SEG</span><span class="module-name">Seguranca</span></td>
+                            <td class="number">2</td>
+                            <td class="number highlight">2</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Detalhamento por Modulo - Empresa -->
+            <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">Detalhamento por Modulo &mdash; Servicos para Empresa</h3>
+            <div class="table-container" style="margin-bottom: 2.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modulo</th>
+                            <th>Total JSPs</th>
+                            <th>Migrados</th>
+                            <th>Restantes</th>
+                            <th>Progresso</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="module-code">ARR</span><span class="module-name">Arrecadacao</span></td>
+                            <td class="number">6</td>
+                            <td class="number highlight">2</td>
+                            <td class="number">4</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 33.3%; background: var(--gradient-amber);"></div></div></td>
+                            <td><span class="status-badge started"><span class="status-dot"></span>33,3%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">CAD</span><span class="module-name">Cadastro</span></td>
+                            <td class="number">10</td>
+                            <td class="number highlight">2</td>
+                            <td class="number">8</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 20%; background: var(--gradient-amber);"></div></div></td>
+                            <td><span class="status-badge started"><span class="status-dot"></span>20%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">COB</span><span class="module-name">Cobranca</span></td>
+                            <td class="number">6</td>
+                            <td class="number">0</td>
+                            <td class="number">6</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DIA</span><span class="module-name">Divida Ativa</span></td>
+                            <td class="number">4</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">3</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 25%; background: var(--gradient-amber);"></div></div></td>
+                            <td><span class="status-badge started"><span class="status-dot"></span>25%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DEC</span><span class="module-name">Declaracao</span></td>
+                            <td class="number">24</td>
+                            <td class="number">0</td>
+                            <td class="number">24</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DOE</span><span class="module-name">Diario Oficial</span></td>
+                            <td class="number">1</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">FIS</span><span class="module-name">Fiscalizacao</span></td>
+                            <td class="number">67</td>
+                            <td class="number highlight">14</td>
+                            <td class="number">53</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 20.9%; background: var(--gradient-amber);"></div></div></td>
+                            <td><span class="status-badge started"><span class="status-dot"></span>20,9%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">FIN</span><span class="module-name">Financeiro</span></td>
+                            <td class="number">1</td>
+                            <td class="number">0</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">LEG</span><span class="module-name">Legislacao</span></td>
+                            <td class="number">1</td>
+                            <td class="number">0</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">PAT</span><span class="module-name">Patrimonio</span></td>
+                            <td class="number">1</td>
+                            <td class="number">0</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">PRO</span><span class="module-name">Protocolo/Processos</span></td>
+                            <td class="number">5</td>
+                            <td class="number highlight">4</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 80%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>80%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Detalhamento por Modulo - Consolidado (Cidadao + Empresa) -->
+            <h3 class="section-title" style="font-size: 1rem; margin-bottom: 1rem;">Detalhamento por Modulo &mdash; Consolidado (Cidadao + Empresa)</h3>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                Soma por modulo das listas Cidadao e Empresa. Alguns JSPs constam em ambas.
+            </p>
+            <div class="table-container" style="margin-bottom: 2.5rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Modulo</th>
+                            <th>Total JSPs</th>
+                            <th>Migrados</th>
+                            <th>Restantes</th>
+                            <th>Progresso</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="module-code">ARR</span><span class="module-name">Arrecadacao</span></td>
+                            <td class="number">12</td>
+                            <td class="number highlight">8</td>
+                            <td class="number">4</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 66.7%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>66,7%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">CAD</span><span class="module-name">Cadastro</span></td>
+                            <td class="number">12</td>
+                            <td class="number highlight">4</td>
+                            <td class="number">8</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 33.3%; background: var(--gradient-amber);"></div></div></td>
+                            <td><span class="status-badge started"><span class="status-dot"></span>33,3%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">COB</span><span class="module-name">Cobranca</span></td>
+                            <td class="number">6</td>
+                            <td class="number">0</td>
+                            <td class="number">6</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DIA</span><span class="module-name">Divida Ativa</span></td>
+                            <td class="number">8</td>
+                            <td class="number highlight">4</td>
+                            <td class="number">4</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 50%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>50%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DEC</span><span class="module-name">Declaracao</span></td>
+                            <td class="number">25</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">24</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 4%; background: var(--gradient-rose);"></div></div></td>
+                            <td><span class="status-badge initial"><span class="status-dot"></span>4%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">DOE</span><span class="module-name">Diario Oficial</span></td>
+                            <td class="number">2</td>
+                            <td class="number highlight">2</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">FIS</span><span class="module-name">Fiscalizacao</span></td>
+                            <td class="number">89</td>
+                            <td class="number highlight">35</td>
+                            <td class="number">54</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 39.3%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>39,3%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">FIN</span><span class="module-name">Financeiro</span></td>
+                            <td class="number">1</td>
+                            <td class="number">0</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">LEV</span><span class="module-name">Leilao Veicular</span></td>
+                            <td class="number">1</td>
+                            <td class="number highlight">1</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">LEG</span><span class="module-name">Legislacao</span></td>
+                            <td class="number">1</td>
+                            <td class="number">0</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">PAT</span><span class="module-name">Patrimonio</span></td>
+                            <td class="number">1</td>
+                            <td class="number">0</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 0%;"></div></div></td>
+                            <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">PRO</span><span class="module-name">Protocolo/Processos</span></td>
+                            <td class="number">13</td>
+                            <td class="number highlight">12</td>
+                            <td class="number">1</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 92.3%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>92,3%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">RHM</span><span class="module-name">Recursos Humanos</span></td>
+                            <td class="number">7</td>
+                            <td class="number highlight">7</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="module-code">SEG</span><span class="module-name">Seguranca</span></td>
+                            <td class="number">2</td>
+                            <td class="number highlight">2</td>
+                            <td class="number">0</td>
+                            <td><div class="mini-progress"><div class="mini-progress-bar" style="width: 100%; background: var(--gradient-emerald);"></div></div></td>
+                            <td><span class="status-badge advanced"><span class="status-dot"></span>100%</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Detalhamento: JSPs Servicos para Cidadao (accordion) -->
+            <div class="details-section">
+                <div class="section-header" style="flex-wrap: wrap; gap: 1rem;">
+                    <h2 class="section-title">Detalhamento: JSPs Servicos para Cidadao (55 JSPs)</h2>
+                    <div style="display: flex; gap: 0.5rem; margin-left: auto;">
+                        <button onclick="expandAll()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--accent-cyan); background: transparent; color: var(--accent-cyan); cursor: pointer; font-size: 0.75rem; font-weight: 600;">Expandir Todos</button>
+                        <button onclick="collapseAll()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--text-muted); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; font-weight: 600;">Recolher Todos</button>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">CAD</span>
+                            <span class="accordion-title">Cadastro</span>
+                            <span class="accordion-count">2 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">CADf_ReemitirFic.jsp</div>
+                                    <div class="file-item">CADf_EmitirFic.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">DIA</span>
+                            <span class="accordion-title">Divida Ativa</span>
+                            <span class="accordion-count">4 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">DIAf_ValidarCertidaoDebito.jsp</div>
+                                    <div class="file-item">DIAf_EmitirDARParcelamentoIPVA1.jsp</div>
+                                    <div class="file-item">DIAf_EmitirDARParcelamentoIPVA2.jsp</div>
+                                    <div class="file-item">DIAf_EmitirCertidaoDebito.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">ARR</span>
+                            <span class="accordion-title">Arrecadacao</span>
+                            <span class="accordion-count">6 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">ARRf_ConsultarDebitosIPVAInternet.jsp</div>
+                                    <div class="file-item">ARRf_InformacoesDebitoIpvaInternet.jsp</div>
+                                    <div class="file-item">ARRf_LancamentoEmitirDarIPVAInternet.jsp</div>
+                                    <div class="file-item">ARRf_GerarDARAvulsoVeiculoNovoInternet.jsp</div>
+                                    <div class="file-item">ARRf_DarInternetEmitir.jsp</div>
+                                    <div class="file-item">ARRf_TabelaValorRefIpvaConsultInternet.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">RHM</span>
+                            <span class="accordion-title">Recursos Humanos</span>
+                            <span class="accordion-count">7 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">RHMf_ConsultarCargo.jsp</div>
+                                    <div class="file-item">RHMf_IncluirCargo.jsp</div>
+                                    <div class="file-item">RHMf_AlterarCargo.jsp</div>
+                                    <div class="file-item">RHMf_ExcluirCargo.jsp</div>
+                                    <div class="file-item">RHMf_ConsultarNivelEscolaridade.jsp</div>
+                                    <div class="file-item">RHMf_AlterarNivelEscolaridade.jsp</div>
+                                    <div class="file-item">RHMf_ExcluirNivelEscolaridade.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">PRO</span>
+                            <span class="accordion-title">Protocolo/Processos</span>
+                            <span class="accordion-count">8 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">PROf_DetalharProcesso.jsp</div>
+                                    <div class="file-item">PROf_ConsultarTramitacoesProc.jsp</div>
+                                    <div class="file-item">PROf_ConsultarHistAlteracoesProc.jsp</div>
+                                    <div class="file-item">PROf_DetalheProcesso.jsp</div>
+                                    <div class="file-item">PROf_TramitacoesProcesso.jsp</div>
+                                    <div class="file-item">PROf_DetalharDocumento.jsp</div>
+                                    <div class="file-item">PROf_ConsultarTramitacoesDoc.jsp</div>
+                                    <div class="file-item">PROf_ConsultarHistAlteracoesDoc.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">FIS</span>
+                            <span class="accordion-title">Fiscalizacao</span>
+                            <span class="accordion-count">22 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">FISf_ConsultarProcessoITCD.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCredNFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeCompleta.jsp</div>
+                                    <div class="file-item">FISf_ConsultarContribICMSAntecipado.jsp</div>
+                                    <div class="file-item">FISf_DadosFrete.jsp</div>
+                                    <div class="file-item">FISf_RelacaoDiariaContribuinteITCD.jsp</div>
+                                    <div class="file-item">FISf_ProcuracaoLancamentoImpostoCausaMortisITCD.jsp</div>
+                                    <div class="file-item">FISf_DeclaracaoNegativaImovel.jsp</div>
+                                    <div class="file-item">FISf_RequerimentoIsencaoNaoIncidenciaITCD.jsp</div>
+                                    <div class="file-item">FISf_RelacaoHerdeirosLancamentoITCD.jsp</div>
+                                    <div class="file-item">FISf_RelacaoDoadoresLancamentoITCD.jsp</div>
+                                    <div class="file-item">FISf_RelacaoDonatariosLancamentoITCD.jsp</div>
+                                    <div class="file-item">FISf_DeclaracaoBensLancamentoITCD.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFENaoContribuinte.jsp</div>
+                                    <div class="file-item">FISf_ConsultarAIDF2.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeCompletaXSLT.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeResumida.jsp</div>
+                                    <div class="file-item">FISf_GerarDanfeNFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFCE.jsp</div>
+                                    <div class="file-item">FISf_ConsultarBPeCompleto.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNF3eCompleta.jsp</div>
+                                    <div class="file-item">FISf_ExibirNFeCompleta.jsp</div>
+                                    <div class="file-item">FISf_ExibirNFeResumida.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">DOE</span>
+                            <span class="accordion-title">Diario Oficial</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">DOEf_ConsultarDOEInternet.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">DEC</span>
+                            <span class="accordion-title">Declaracao</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">DECf_EmitirGuiaITCD.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">LEV</span>
+                            <span class="accordion-title">Leilao Veicular</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">LEVf_ArremateConsultarPub.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">SEG</span>
+                            <span class="accordion-title">Seguranca</span>
+                            <span class="accordion-count">2 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">SEGf_PegarCpf.jsp</div>
+                                    <div class="file-item">SEGf_TrocarSenha.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detalhamento: JSPs Servicos para Empresa (accordion) -->
+            <div class="details-section">
+                <div class="section-header" style="flex-wrap: wrap; gap: 1rem;">
+                    <h2 class="section-title">Detalhamento: JSPs Servicos para Empresa (142 JSPs)</h2>
+                    <div style="display: flex; gap: 0.5rem; margin-left: auto;">
+                        <button onclick="expandAll()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--accent-cyan); background: transparent; color: var(--accent-cyan); cursor: pointer; font-size: 0.75rem; font-weight: 600;">Expandir Todos</button>
+                        <button onclick="collapseAll()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--text-muted); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; font-weight: 600;">Recolher Todos</button>
+                    </div>
+                </div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1rem;">
+                    Apenas os itens da lista Empresa que coincidem com JSPs ja migrados aparecem como Migrado. COB, PAT, LEG e FIN nao possuem nenhuma pagina migrada.
+                </p>
+                <div class="accordion">
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">DOE</span>
+                            <span class="accordion-title">Diario Oficial</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">DOEf_ConsultarDOEInternet.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">ARR</span>
+                            <span class="accordion-title">Arrecadacao</span>
+                            <span class="accordion-count">7 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">ARRf_CalcularPenalidades.jsp</div>
+                                    <div class="file-item">ARRf_ConsultarExtrPgtoCont.jsp</div>
+                                    <div class="file-item">ARRf_DarInternetEmitir.jsp</div>
+                                    <div class="file-item">ARRf_TabelaValorRefIpvaConsultInternet.jsp</div>
+                                    <div class="file-item">ARRf_LancamentoEmitirDar.jsp</div>
+                                    <div class="file-item">ARRf_LancamentoEmitirDarContribuinte.jsp</div>
+                                    <div class="file-item">ARRf_LancamentoConsultar.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">COB</span>
+                            <span class="accordion-title">Cobranca</span>
+                            <span class="accordion-count">6 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">COBf_ParGerarDarParcelaContribuinte.jsp</div>
+                                    <div class="file-item">COBf_GerarDARLancamentoAutRep.jsp</div>
+                                    <div class="file-item">COBf_ParConfissaoCadastrar.jsp</div>
+                                    <div class="file-item">COBf_ParConfissaoConsultar.jsp</div>
+                                    <div class="file-item">COBf_BloqueioConsultar.jsp</div>
+                                    <div class="file-item">COBf_OmiGeralConsGenericaContribuinte.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">DIA</span>
+                            <span class="accordion-title">Divida Ativa</span>
+                            <span class="accordion-count">5 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">DIAf_ConsultarParcelamento.jsp</div>
+                                    <div class="file-item">DIAf_GerarDARPgtoVista.jsp</div>
+                                    <div class="file-item">DIAf_ConsultarInscDA.jsp</div>
+                                    <div class="file-item">DIAf_ValidarCertidaoDebito.jsp</div>
+                                    <div class="file-item">DIAf_EmitirCertidaoDebitoIntranet.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">CAD</span>
+                            <span class="accordion-title">Cadastro</span>
+                            <span class="accordion-count">10 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">CADf_CriarFacViaWebPasso1.jsp</div>
+                                    <div class="file-item">CADf_AdicionarAnexosAProcesso.jsp</div>
+                                    <div class="file-item">CADf_EmitirFic.jsp</div>
+                                    <div class="file-item">CADf_ReemitirFic.jsp</div>
+                                    <div class="file-item">CADf_ConsHistoricoContribuinte.jsp</div>
+                                    <div class="file-item">CADf_ConsHistoricoOperacoesContribuinte.jsp</div>
+                                    <div class="file-item">CADf_ConsContribBasico.jsp</div>
+                                    <div class="file-item">CADf_ConsultarSocios.jsp</div>
+                                    <div class="file-item">CADf_EmitirCertDadosCadastrais.jsp</div>
+                                    <div class="file-item">CADf_ReemitirCertDadosCadastrais.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">PRO</span>
+                            <span class="accordion-title">Protocolo/Processos</span>
+                            <span class="accordion-count">5 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">PROf_DetalharProcesso.jsp</div>
+                                    <div class="file-item">PROf_ConsultarTramitacoesProc.jsp</div>
+                                    <div class="file-item">PROf_DetalharDocumento.jsp</div>
+                                    <div class="file-item">PROf_ConsultarTramitacoesDoc.jsp</div>
+                                    <div class="file-item">PROf_ApresentDossieContribuinte.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">FIS</span>
+                            <span class="accordion-title">Fiscalizacao</span>
+                            <span class="accordion-count">67 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">FISf_ConsultarContribICMSAntecipado.jsp</div>
+                                    <div class="file-item">FISf_ConsultarPautaFiscal.jsp</div>
+                                    <div class="file-item">FISf_ConsultarFatura.jsp</div>
+                                    <div class="file-item">FISf_GerarFormularioRevisaoFaturaPassoUm.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCobrancasNFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultarFormularioRevisaoFatura.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFENaoContribuinte.jsp</div>
+                                    <div class="file-item">FISf_FerramentaDifalNaoContribuinte.jsp</div>
+                                    <div class="file-item">FISf_IncluirAIDF.jsp</div>
+                                    <div class="file-item">FISf_IncluirReqAutentNotaFiscal.jsp</div>
+                                    <div class="file-item">FISf_IncluirReqAutentLivroFiscal.jsp</div>
+                                    <div class="file-item">FISf_IncluirPAFS.jsp</div>
+                                    <div class="file-item">FISf_IncluirReqGrafConfNot.jsp</div>
+                                    <div class="file-item">FISf_ConsultaDocFiscaisAIDF.jsp</div>
+                                    <div class="file-item">FISf_ConsultaDocFiscaisAIDFAut.jsp</div>
+                                    <div class="file-item">FISf_ConsultarTalonario.jsp</div>
+                                    <div class="file-item">FISf_ConsultarSitGrafica.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeCompletaXSLT.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeXml2.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCancelamentoExtempDFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeResumida.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeCompleta.jsp</div>
+                                    <div class="file-item">FISf_CredDescredNFe.jsp</div>
+                                    <div class="file-item">FISf_GerarDanfeNFe.jsp</div>
+                                    <div class="file-item">FISf_GerarXmlNFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCredNFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFeInutilizadas.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCTeResumida.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCTeCompleto.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCTeGenerica.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCTeOSGenerica.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCTeOSCompleto.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFCE.jsp</div>
+                                    <div class="file-item">FISf_GerarCSC.jsp</div>
+                                    <div class="file-item">FISf_ConsultarCSC.jsp</div>
+                                    <div class="file-item">FISf_CredenciamentoNFCe.jsp</div>
+                                    <div class="file-item">FISf_ConsultaGenericaEmitenteNFCe.jsp</div>
+                                    <div class="file-item">FISf_ConsultaFaturamentoDiario.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNFCeInutilizadas.jsp</div>
+                                    <div class="file-item">FISf_IncluirSolicitIntervEcf.jsp</div>
+                                    <div class="file-item">FISf_IncluirAtestIntervencaoECF.jsp</div>
+                                    <div class="file-item">FISf_IndicarConformEquipSolicitIntervEcf.jsp</div>
+                                    <div class="file-item">FISf_ConsultarLancamentosNFAe.jsp</div>
+                                    <div class="file-item">FISf_EmitirNotaFiscalAvulsaEletronica.jsp</div>
+                                    <div class="file-item">FISf_CancelarNFAe.jsp</div>
+                                    <div class="file-item">FISf_GerarDanfeNFAe.jsp</div>
+                                    <div class="file-item">FISf_ImprimirEspelhoNotaFiscalAvulsa.jsp</div>
+                                    <div class="file-item">FISf_ConsultarReqEleProcDados.jsp</div>
+                                    <div class="file-item">FISf_ImprimirReqEleProcDados.jsp</div>
+                                    <div class="file-item">FISf_AlterarReqEleProcDados.jsp</div>
+                                    <div class="file-item">FISf_ExcluirReqEleProcDados.jsp</div>
+                                    <div class="file-item">FISf_IncluirReqEleProcDados.jsp</div>
+                                    <div class="file-item">FISf_ConsultarBPeCompleto.jsp</div>
+                                    <div class="file-item">FISf_ConsultaGenericaBPe.jsp</div>
+                                    <div class="file-item">FISf_GerarRelatorioTaxaEmissaoDFe.jsp</div>
+                                    <div class="file-item">FISf_GerarXMLMDFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultaGenericaMDFe.jsp</div>
+                                    <div class="file-item">FISf_ConsultaCCCHomologacao.jsp</div>
+                                    <div class="file-item">FISf_ConsultarNF3eGenerica.jsp</div>
+                                    <div class="file-item">FISf_ConsultarGTVeCompleta.jsp</div>
+                                    <div class="file-item">FISf_ConsultarGTVeGenerica.jsp</div>
+                                    <div class="file-item">FISf_ConsultaLivrosFiscaisAutent.jsp</div>
+                                    <div class="file-item">FISf_ImprimirTermoEncerramento.jsp</div>
+                                    <div class="file-item">FISf_ListarOrdemServicoEmAndamento.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">DEC</span>
+                            <span class="accordion-title">Declaracao</span>
+                            <span class="accordion-count">24 arquivos</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">DECf_ReciboGimPdfContExterno.jsp</div>
+                                    <div class="file-item">DECf_ConsultarGimsAdvertRejeic.jsp</div>
+                                    <div class="file-item">DECf_GIMNotasFiscaisEmitentDestinat.jsp</div>
+                                    <div class="file-item">DECf_ConsultarHistoricoGim.jsp</div>
+                                    <div class="file-item">DECf_NotasFiscaisDeclaradasTerce.jsp</div>
+                                    <div class="file-item">DECf_DeclararGiva.jsp</div>
+                                    <div class="file-item">DECf_ConsultarReciboGiast.jsp</div>
+                                    <div class="file-item">DECf_ConsultarCruzamentoGIASTxGNRE.jsp</div>
+                                    <div class="file-item">DECf_ConsultarGiastProcessCont.jsp</div>
+                                    <div class="file-item">DECf_ConsultarDASNProcessadas.jsp</div>
+                                    <div class="file-item">DECf_ConsultarDasnSIMEI.jsp</div>
+                                    <div class="file-item">DECf_ConsultarPGDASDProcessadas.jsp</div>
+                                    <div class="file-item">DECf_ConsultarDeSTDAProcessadas.jsp</div>
+                                    <div class="file-item">DECf_CarregarGimOnLine.jsp</div>
+                                    <div class="file-item">DECf_ConsultarReciboConv115.jsp</div>
+                                    <div class="file-item">DECf_CarregarArquivosConvenio201.jsp</div>
+                                    <div class="file-item">DECf_EmitirReciboEntregaConvenio201.jsp</div>
+                                    <div class="file-item">DECf_EmitirReciboEntregaConvenio126.jsp</div>
+                                    <div class="file-item">DECf_CarregarArquivosConvenio126.jsp</div>
+                                    <div class="file-item">DECf_CarregarArqPrecoSugBaseCalc.jsp</div>
+                                    <div class="file-item">DECf_ConsultarContribuinteSPEDWS.jsp</div>
+                                    <div class="file-item">DECf_EmitirAutorizacaoSPEDWS.jsp</div>
+                                    <div class="file-item">DECf_ConsultaEFDCarregada.jsp</div>
+                                    <div class="file-item">DECf_ConsultarDocFiscaisDeclarados.jsp</div>
+                                    <div class="file-item">DECf_DossierContribuinte.jsp</div>
+                                    <div class="file-item">DECf_IncluirAgendamentoAtendimento.jsp</div>
+                                    <div class="file-item">DECf_ConsultarAgendamentoAtendimento.jsp</div>
+                                    <div class="file-item">DECf_ConsRelFechGivAnoBase.jsp</div>
+                                    <div class="file-item">DECf_ConsultarDeclaracoesMunicipioIpm.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">PAT</span>
+                            <span class="accordion-title">Patrimonio</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">PATf_ResumoProcesso.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">LEG</span>
+                            <span class="accordion-title">Legislacao</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">LEGf_ConsultarConsolidacaoFiscalGerTrib.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <div class="accordion-header" onclick="toggleAccordion(this)">
+                            <span class="accordion-icon">&#9654;</span>
+                            <span class="accordion-module-code">FIN</span>
+                            <span class="accordion-title">Financeiro</span>
+                            <span class="accordion-count">1 arquivo</span>
+                        </div>
+                        <div class="accordion-content">
+                            <div class="accordion-body">
+                                <div class="file-grid">
+                                    <div class="file-item">FINf_GerarComprovanteRPV.jsp</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visao Geral ATF (colapsavel) -->
+        <div class="details-section">
+            <div class="accordion">
+                <div class="accordion-item visao-geral-atf">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-title" style="flex: 1;">Visao Geral ATF</span>
+                        <span class="accordion-count">Total, progresso, modulos, JSPs migradas</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body" style="padding: 1.5rem 1.25rem;">
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card cyan">
+                <div class="stat-label">Total de JSPs</div>
+                <div class="stat-value">4.919</div>
+                <div class="stat-detail">Paginas no projeto ATF</div>
+            </div>
+            <div class="stat-card emerald">
+                <div class="stat-label">Migrados</div>
+                <div class="stat-value">105</div>
+                <div class="stat-detail">Paginas com Bootstrap 5.3</div>
+            </div>
+            <div class="stat-card rose">
+                <div class="stat-label">Restantes</div>
+                <div class="stat-value">4.814</div>
+                <div class="stat-detail">Paginas pendentes</div>
+            </div>
+            <div class="stat-card amber">
+                <div class="stat-label">Modulos</div>
+                <div class="stat-value">18</div>
+                <div class="stat-detail">2 avancados, 7 iniciados, 2 iniciais, 7 pendentes</div>
+            </div>
+        </div>
+
+        <!-- Global Progress -->
+        <div class="progress-section">
+            <div class="section-header">
+                <h2 class="section-title">Progresso Global da Migracao</h2>
+            </div>
+            <div class="global-progress">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 2.1%"></div>
+                </div>
+                <div class="progress-info">
+                    <span>105 de 4.919 paginas migradas</span>
+                    <span class="progress-percentage">2,1%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Summary -->
+        <div class="status-summary">
+            <div class="status-item">
+                <div class="status-icon green">&#x1F7E2;</div>
+                <div class="status-content">
+                    <h4>Avancado (&gt;20%)</h4>
+                    <p>2 modulos</p>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-icon yellow">&#x1F7E1;</div>
+                <div class="status-content">
+                    <h4>Iniciado (1-20%)</h4>
+                    <p>7 modulos</p>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-icon red">&#x1F534;</div>
+                <div class="status-content">
+                    <h4>Inicial (&lt;1%)</h4>
+                    <p>2 modulos</p>
+                </div>
+            </div>
+            <div class="status-item">
+                <div class="status-icon gray">&#x26AB;</div>
+                <div class="status-content">
+                    <h4>Nao Iniciado</h4>
+                    <p>7 modulos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <h2 class="section-title">Detalhamento por Modulo</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modulo</th>
+                        <th>Total JSPs</th>
+                        <th>Migrados</th>
+                        <th>Restantes</th>
+                        <th>Progresso</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="module-code">SEG</span><span class="module-name">Seguranca</span></td>
+                        <td class="number">130</td>
+                        <td class="number highlight">11</td>
+                        <td class="number">119</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 8.5%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>8,5%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">RHM</span><span class="module-name">Recursos Humanos</span></td>
+                        <td class="number">122</td>
+                        <td class="number highlight">30</td>
+                        <td class="number">92</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 24.6%; background: var(--gradient-emerald);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge advanced"><span class="status-dot"></span>24,6%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">PRO</span><span class="module-name">Protocolo/Processos</span></td>
+                        <td class="number">122</td>
+                        <td class="number highlight">15</td>
+                        <td class="number">107</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 12.3%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>12,3%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">ARR</span><span class="module-name">Arrecadacao</span></td>
+                        <td class="number">570</td>
+                        <td class="number highlight">10</td>
+                        <td class="number">560</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 1.8%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>1,8%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">FIS</span><span class="module-name">Fiscalizacao</span></td>
+                        <td class="number">1.543</td>
+                        <td class="number highlight">25</td>
+                        <td class="number">1.518</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 1.6%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>1,6%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">DEC</span><span class="module-name">Declaracao</span></td>
+                        <td class="number">560</td>
+                        <td class="number highlight">1</td>
+                        <td class="number">559</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0.2%; background: var(--gradient-rose);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge initial"><span class="status-dot"></span>0,2%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">DIA</span><span class="module-name">Divida Ativa</span></td>
+                        <td class="number">245</td>
+                        <td class="number highlight">3</td>
+                        <td class="number">242</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 1.2%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>1,2%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">DOE</span><span class="module-name">Diario Oficial</span></td>
+                        <td class="number">95</td>
+                        <td class="number highlight">1</td>
+                        <td class="number">94</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 1.1%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>1,1%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">LEV</span><span class="module-name">Leilao Veicular</span></td>
+                        <td class="number">43</td>
+                        <td class="number highlight">2</td>
+                        <td class="number">41</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 4.7%; background: var(--gradient-amber);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge started"><span class="status-dot"></span>4,7%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">CAD</span><span class="module-name">Cadastro</span></td>
+                        <td class="number">466</td>
+                        <td class="number highlight">3</td>
+                        <td class="number">463</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0.6%; background: var(--gradient-rose);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge initial"><span class="status-dot"></span>0,6%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">COB</span><span class="module-name">Cobranca</span></td>
+                        <td class="number">288</td>
+                        <td class="number">0</td>
+                        <td class="number">288</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">DIP</span><span class="module-name">DIP</span></td>
+                        <td class="number">137</td>
+                        <td class="number">0</td>
+                        <td class="number">137</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">FIN</span><span class="module-name">Financeiro</span></td>
+                        <td class="number">5</td>
+                        <td class="number">0</td>
+                        <td class="number">5</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">LEG</span><span class="module-name">Legislacao</span></td>
+                        <td class="number">288</td>
+                        <td class="number">0</td>
+                        <td class="number">288</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">MOP</span><span class="module-name">MOP</span></td>
+                        <td class="number">54</td>
+                        <td class="number">0</td>
+                        <td class="number">54</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">PAT</span><span class="module-name">Patrimonio</span></td>
+                        <td class="number">173</td>
+                        <td class="number">0</td>
+                        <td class="number">173</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">STC</span><span class="module-name">STC</span></td>
+                        <td class="number">78</td>
+                        <td class="number">0</td>
+                        <td class="number">78</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 0%;"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge not-started"><span class="status-dot"></span>0%</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="module-code">CMP</span><span class="module-name">Componentes</span></td>
+                        <td class="number">~20</td>
+                        <td class="number highlight">6</td>
+                        <td class="number">~14</td>
+                        <td>
+                            <div class="mini-progress">
+                                <div class="mini-progress-bar" style="width: 30%; background: var(--gradient-emerald);"></div>
+                            </div>
+                        </td>
+                        <td><span class="status-badge advanced"><span class="status-dot"></span>30%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Priority Section -->
+        <div class="priority-section">
+            <div class="section-header">
+                <h2 class="section-title">Priorizacao Sugerida</h2>
+            </div>
+            <div class="priority-list">
+                <div class="priority-item high">
+                    <div class="priority-rank">1</div>
+                    <div class="priority-info">
+                        <div class="priority-module">SEG - Seguranca</div>
+                        <div class="priority-reason">Base de acesso (login, menu) - impacta todo o sistema</div>
+                    </div>
+                    <span class="priority-badge">Alta</span>
+                </div>
+                <div class="priority-item high">
+                    <div class="priority-rank">2</div>
+                    <div class="priority-info">
+                        <div class="priority-module">ARR - Arrecadacao</div>
+                        <div class="priority-reason">Grande volume + funcionalidades de internet para contribuinte</div>
+                    </div>
+                    <span class="priority-badge">Alta</span>
+                </div>
+                <div class="priority-item high">
+                    <div class="priority-rank">3</div>
+                    <div class="priority-info">
+                        <div class="priority-module">FIS - Fiscalizacao</div>
+                        <div class="priority-reason">Maior modulo + consultas NFe/NFCe muito utilizadas</div>
+                    </div>
+                    <span class="priority-badge">Alta</span>
+                </div>
+                <div class="priority-item medium">
+                    <div class="priority-rank">4</div>
+                    <div class="priority-info">
+                        <div class="priority-module">CAD - Cadastro</div>
+                        <div class="priority-reason">Cadastro e funcionalidade essencial do sistema</div>
+                    </div>
+                    <span class="priority-badge">Media</span>
+                </div>
+                <div class="priority-item medium">
+                    <div class="priority-rank">5</div>
+                    <div class="priority-info">
+                        <div class="priority-module">PRO - Protocolo</div>
+                        <div class="priority-reason">Protocolo usado internamente - gestao de processos</div>
+                    </div>
+                    <span class="priority-badge">Media</span>
+                </div>
+                <div class="priority-item medium">
+                    <div class="priority-rank">6</div>
+                    <div class="priority-info">
+                        <div class="priority-module">DIA - Divida Ativa</div>
+                        <div class="priority-reason">Emissao de certidoes - acesso publico</div>
+                    </div>
+                    <span class="priority-badge">Media</span>
+                </div>
+                <div class="priority-item low">
+                    <div class="priority-rank">7+</div>
+                    <div class="priority-info">
+                        <div class="priority-module">RHM, LEG, COB, PAT, etc.</div>
+                        <div class="priority-reason">Modulos de uso interno administrativo - menor impacto externo</div>
+                    </div>
+                    <span class="priority-badge">Baixa</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Migrated -->
+        <div class="detailed-section">
+            <div class="section-header">
+                <h2 class="section-title">Funcionalidades Migradas por Modulo</h2>
+            </div>
+            <div class="module-grid">
+                <div class="module-card">
+                    <div class="module-card-header">
+                        <span class="module-card-title">Seguranca</span>
+                        <span class="module-card-code">SEG</span>
+                    </div>
+                    <div class="module-card-stats">
+                        <div class="module-card-stat done">&#10003; <span>11</span> migrados</div>
+                        <div class="module-card-stat pending">&#9675; <span>119</span> restantes</div>
+                    </div>
+                    <ul style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 1rem;">
+                        <li>Login, Trocar Senha</li>
+                        <li>Menu, Principal Sistema</li>
+                        <li>Pegar CPF, Acessar Funcao</li>
+                        <li>Reenviar Senha</li>
+                        <li>Ler/Minhas Mensagens</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-card-header">
+                        <span class="module-card-title">Recursos Humanos</span>
+                        <span class="module-card-code">RHM</span>
+                    </div>
+                    <div class="module-card-stats">
+                        <div class="module-card-stat done">&#10003; <span>30</span> migrados</div>
+                        <div class="module-card-stat pending">&#9675; <span>92</span> restantes</div>
+                    </div>
+                    <ul style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 1rem;">
+                        <li>CRUD Cargo, Curso, Funcao</li>
+                        <li>CRUD Nivel Escolaridade, Tp Situacao</li>
+                        <li>CRUD Tipo Regime, Tipo Afastamento</li>
+                        <li>CRUD Tipo Documento Digital</li>
+                        <li>CRUD Tipo Anotacao</li>
+                        <li>Cadastrar Parametros</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-card-header">
+                        <span class="module-card-title">Protocolo</span>
+                        <span class="module-card-code">PRO</span>
+                    </div>
+                    <div class="module-card-stats">
+                        <div class="module-card-stat done">&#10003; <span>15</span> migrados</div>
+                        <div class="module-card-stat pending">&#9675; <span>107</span> restantes</div>
+                    </div>
+                    <ul style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 1rem;">
+                        <li>Detalhe Processo/Documento</li>
+                        <li>Tramitacoes e Historicos</li>
+                        <li>Avaliacao de Desempenho</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-card-header">
+                        <span class="module-card-title">Fiscalizacao</span>
+                        <span class="module-card-code">FIS</span>
+                    </div>
+                    <div class="module-card-stats">
+                        <div class="module-card-stat done">&#10003; <span>25</span> migrados</div>
+                        <div class="module-card-stat pending">&#9675; <span>1.518</span> restantes</div>
+                    </div>
+                    <ul style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 1rem;">
+                        <li>Consultas NFe, NFCe, CTe, BPe</li>
+                        <li>ITCD (Processo, Declaracoes)</li>
+                        <li>AIDF, Credito NFe</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-card-header">
+                        <span class="module-card-title">Arrecadacao</span>
+                        <span class="module-card-code">ARR</span>
+                    </div>
+                    <div class="module-card-stats">
+                        <div class="module-card-stat done">&#10003; <span>10</span> migrados</div>
+                        <div class="module-card-stat pending">&#9675; <span>560</span> restantes</div>
+                    </div>
+                    <ul style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 1rem;">
+                        <li>Emitir DAR Internet</li>
+                        <li>Consultar/Emitir IPVA</li>
+                        <li>Tabela Valor Referencia</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="module-card-header">
+                        <span class="module-card-title">Cadastro</span>
+                        <span class="module-card-code">CAD</span>
+                    </div>
+                    <div class="module-card-stats">
+                        <div class="module-card-stat done">&#10003; <span>3</span> migrados</div>
+                        <div class="module-card-stat pending">&#9675; <span>463</span> restantes</div>
+                    </div>
+                    <ul style="margin-top: 0.75rem; font-size: 0.75rem; color: var(--text-muted); padding-left: 1rem;">
+                        <li>Emitir FIC</li>
+                        <li>Reemitir/Validar FIC</li>
+                        <li>Termo de Adesao PDF</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Files by Module -->
+        <div class="details-section">
+            <div class="section-header" style="flex-wrap: wrap; gap: 1rem;">
+                <h2 class="section-title">Detalhamento: JSPs Migradas por Modulo</h2>
+                <div style="display: flex; gap: 0.5rem; margin-left: auto;">
+                    <button onclick="expandAll()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--accent-cyan); background: transparent; color: var(--accent-cyan); cursor: pointer; font-size: 0.75rem; font-weight: 600;">Expandir Todos</button>
+                    <button onclick="collapseAll()" style="padding: 0.5rem 1rem; border-radius: 6px; border: 1px solid var(--text-muted); background: transparent; color: var(--text-muted); cursor: pointer; font-size: 0.75rem; font-weight: 600;">Recolher Todos</button>
+                </div>
+            </div>
+            <div class="accordion">
+                <!-- SEG -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">SEG</span>
+                        <span class="accordion-title">Seguranca</span>
+                        <span class="accordion-count">11 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">SEGf_Login.jsp</div>
+                                <div class="file-item">SEGf_TrocarSenha.jsp</div>
+                                <div class="file-item">SEGf_PegarCpf.jsp</div>
+                                <div class="file-item">SEGf_AcessarFuncaoAtf.jsp</div>
+                                <div class="file-item">SEGf_Sistema.jsp</div>
+                                <div class="file-item">SEGf_PrincipalSistema.jsp</div>
+                                <div class="file-item">SEGf_Menu.jsp</div>
+                                <div class="file-item">SEGf_ReenviarSenha.jsp</div>
+                                <div class="file-item">SEGf_ReenviarSenhaUsuExterno.jsp</div>
+                                <div class="file-item">SEGf_LerMensagem.jsp</div>
+                                <div class="file-item">SEGf_MinhasMensagens.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RHM -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">RHM</span>
+                        <span class="accordion-title">Recursos Humanos</span>
+                        <span class="accordion-count">30 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">RHMf_ConsultarCargo.jsp</div>
+                                <div class="file-item">RHMf_IncluirCargo.jsp</div>
+                                <div class="file-item">RHMf_AlterarCargo.jsp</div>
+                                <div class="file-item">RHMf_ExcluirCargo.jsp</div>
+                                <div class="file-item">RHMf_ConsultarCurso.jsp</div>
+                                <div class="file-item">RHMf_IncluirCurso.jsp</div>
+                                <div class="file-item">RHMf_AlterarCurso.jsp</div>
+                                <div class="file-item">RHMf_ExcluirCurso.jsp</div>
+                                <div class="file-item">RHMf_ConsultarFuncao.jsp</div>
+                                <div class="file-item">RHMf_IncluirFuncao.jsp</div>
+                                <div class="file-item">RHMf_AlterarFuncao.jsp</div>
+                                <div class="file-item">RHMf_ExcluirFuncao.jsp</div>
+                                <div class="file-item">RHMf_ConsultarNivelEscolaridade.jsp</div>
+                                <div class="file-item">RHMf_IncluirNivelEscolaridade.jsp</div>
+                                <div class="file-item">RHMf_AlterarNivelEscolaridade.jsp</div>
+                                <div class="file-item">RHMf_ExcluirNivelEscolaridade.jsp</div>
+                                <div class="file-item">RHMf_ConsultarTpSituacao.jsp</div>
+                                <div class="file-item">RHMf_IncluirTpSituacao.jsp</div>
+                                <div class="file-item">RHMf_AlterarTpSituacao.jsp</div>
+                                <div class="file-item">RHMf_ExcluirTpSituacao.jsp</div>
+                                <div class="file-item">RHMf_ConsultarTipoRegime.jsp</div>
+                                <div class="file-item">RHMf_IncluirTipoRegime.jsp</div>
+                                <div class="file-item">RHMf_EditarTipoRegime.jsp</div>
+                                <div class="file-item">RHMf_IncluirTipoAfastamento.jsp</div>
+                                <div class="file-item">RHMf_EditarTipoAfastamento.jsp</div>
+                                <div class="file-item">RHMf_ConsultarTipoDocumentoDigital.jsp</div>
+                                <div class="file-item">RHMf_IncluirTipoDocumentoDigital.jsp</div>
+                                <div class="file-item">RHMf_AlterarTipoDocumentoDigital.jsp</div>
+                                <div class="file-item">RHMf_ConsultarTpAnotacao.jsp</div>
+                                <div class="file-item">RHMf_IncluirTpAnotacao.jsp</div>
+                                <div class="file-item">RHMf_CadastrarParametros.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRO -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">PRO</span>
+                        <span class="accordion-title">Protocolo/Processos</span>
+                        <span class="accordion-count">15 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">PROf_DetalheProcesso.jsp</div>
+                                <div class="file-item">PROf_DetalharProcesso.jsp</div>
+                                <div class="file-item">PROf_DetalheDocumento.jsp</div>
+                                <div class="file-item">PROf_DetalharDocumento.jsp</div>
+                                <div class="file-item">PROf_TramitacoesProcesso.jsp</div>
+                                <div class="file-item">PROf_TramitacoesDocumento.jsp</div>
+                                <div class="file-item">PROf_ConsultarTramitacoesProc.jsp</div>
+                                <div class="file-item">PROf_ConsultarTramitacoesDoc.jsp</div>
+                                <div class="file-item">PROf_HistoricoAlteracoesProc.jsp</div>
+                                <div class="file-item">PROf_HistoricoAlteracoesDoc.jsp</div>
+                                <div class="file-item">PROf_ConsultarHistAlteracoesProc.jsp</div>
+                                <div class="file-item">PROf_ConsultarHistAlteracoesDoc.jsp</div>
+                                <div class="file-item">PROf_ConsPrazosPadraoTramit.jsp</div>
+                                <div class="file-item">PROf_AvaliarDesTramitIndivProc.jsp</div>
+                                <div class="file-item">PROf_AvalDesTramitIndivProc.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ARR -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">ARR</span>
+                        <span class="accordion-title">Arrecadacao</span>
+                        <span class="accordion-count">10 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">ARRf_DarInternetEmitir.jsp</div>
+                                <div class="file-item">ARRf_ReutDarInternetEmitir.jsp</div>
+                                <div class="file-item">ARRf_IframeReutEnderecoDarInternet.jsp</div>
+                                <div class="file-item">ARRf_ConsultarDebitosIPVAInternet.jsp</div>
+                                <div class="file-item">ARRf_ConsultarDebitosIPVA.jsp</div>
+                                <div class="file-item">ARRf_InformacoesDebitoIpvaInternet.jsp</div>
+                                <div class="file-item">ARRf_LancamentoEmitirDarIPVAInternet.jsp</div>
+                                <div class="file-item">ARRf_GerarDARAvulsoVeiculoNovoInternet.jsp</div>
+                                <div class="file-item">ARRf_TabelaValorRefIpvaConsultInternet.jsp</div>
+                                <div class="file-item">ARRf_MovBancarioDiarioRec.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIS -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">FIS</span>
+                        <span class="accordion-title">Fiscalizacao</span>
+                        <span class="accordion-count">25 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">FISf_ConsultarNFeCompleta.jsp</div>
+                                <div class="file-item">FISf_ConsultarNFeResumida.jsp</div>
+                                <div class="file-item">FISf_ConsultarNFeCompletaXSLT.jsp</div>
+                                <div class="file-item">FISf_ConsultarNFENaoContribuinte.jsp</div>
+                                <div class="file-item">FISf_ExibirNFeCompleta.jsp</div>
+                                <div class="file-item">FISf_ExibirNFeResumida.jsp</div>
+                                <div class="file-item">FISf_ConsultarNFCE.jsp</div>
+                                <div class="file-item">FISf_ExibirNFCE.jsp</div>
+                                <div class="file-item">FISf_GerarDanfeNFe.jsp</div>
+                                <div class="file-item">FISf_ConsultarCTeResumida.jsp</div>
+                                <div class="file-item">FISf_ConsultarBPeCompleto.jsp</div>
+                                <div class="file-item">FISf_ConsultarNF3eCompleta.jsp</div>
+                                <div class="file-item">FISf_ConsultarCredNFe.jsp</div>
+                                <div class="file-item">FISf_ListarHistoricoCredNFe.jsp</div>
+                                <div class="file-item">FISf_ConsultarAIDF2.jsp</div>
+                                <div class="file-item">FISf_ConsultarContribICMSAntecipado.jsp</div>
+                                <div class="file-item">FISf_ConsultarProcessoITCD.jsp</div>
+                                <div class="file-item">FISf_DeclaracaoBensLancamentoITCD.jsp</div>
+                                <div class="file-item">FISf_DeclaracaoNegativaImovel.jsp</div>
+                                <div class="file-item">FISf_RelacaoHerdeirosLancamentoITCD.jsp</div>
+                                <div class="file-item">FISf_RelacaoDonatariosLancamentoITCD.jsp</div>
+                                <div class="file-item">FISf_RelacaoDoadoresLancamentoITCD.jsp</div>
+                                <div class="file-item">FISf_RelacaoDiariaContribuinteITCD.jsp</div>
+                                <div class="file-item">FISf_ProcuracaoLancamentoImpostoCausaMortisITCD.jsp</div>
+                                <div class="file-item">FISf_RequerimentoIsencaoNaoIncidenciaITCD.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEC -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">DEC</span>
+                        <span class="accordion-title">Declaracao</span>
+                        <span class="accordion-count">1 arquivo</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">DECf_EmitirGuiaITCD.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIA -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">DIA</span>
+                        <span class="accordion-title">Divida Ativa</span>
+                        <span class="accordion-count">3 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">DIAf_EmitirCertidaoDebito.jsp</div>
+                                <div class="file-item">DIAf_ValidarCertidaoDebito.jsp</div>
+                                <div class="file-item">DIAf_EmitirDARParcelamentoIPVA1.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DOE -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">DOE</span>
+                        <span class="accordion-title">Diario Oficial</span>
+                        <span class="accordion-count">1 arquivo</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">DOEf_ConsultarDOEInternet.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEV -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">LEV</span>
+                        <span class="accordion-title">Leilao Veicular</span>
+                        <span class="accordion-count">2 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">LEVf_ArremateConsultarPub.jsp</div>
+                                <div class="file-item">LEVf_ArremateDetalharPub.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CAD -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">CAD</span>
+                        <span class="accordion-title">Cadastro</span>
+                        <span class="accordion-count">3 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">CADf_EmitirFic.jsp</div>
+                                <div class="file-item">CADf_ReemitirFic.jsp</div>
+                                <div class="file-item">CADf_TermoAdesaoPDF.jsp</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Outros -->
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <span class="accordion-icon">&#9654;</span>
+                        <span class="accordion-module-code">HTM</span>
+                        <span class="accordion-title">Paginas Estaticas</span>
+                        <span class="accordion-count">3 arquivos</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <div class="file-grid">
+                                <div class="file-item">index.htm</div>
+                                <div class="file-item">cabecalho.htm</div>
+                                <div class="file-item">cabecalho_serVirtual.htm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>Projeto ATF Responsivo - Secretaria de Estado da Fazenda da Paraiba</p>
+            <p style="margin-top: 0.5rem;">Gerado por analise do codigo-fonte</p>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle accordion
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const isOpen = item.classList.contains('open');
+            
+            // Close all accordions
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('open');
+            });
+            
+            // Open clicked if it was closed
+            if (!isOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        // Expand all accordions
+        function expandAll() {
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.add('open');
+            });
+        }
+
+        // Collapse all accordions
+        function collapseAll() {
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('open');
+            });
+        }
+
+        // Animate progress bars on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.progress-bar, .mini-progress-bar');
+            progressBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
